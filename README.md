@@ -1,11 +1,11 @@
-# Require
+## Require
 Pasang di build.gradle dan dependency nya:
 ```
 1. maven { url 'https://jitpack.io' }
 2. implementation 'com.github.Rofik1075:CameraKit:1.0.0'
 ```
 
-# Cara Menggunakan
+## Cara Menggunakan
 ```
 private Camera camera;
 
