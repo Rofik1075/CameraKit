@@ -2,7 +2,7 @@
 Pasang di build.gradle dan dependency nya:
 ```
 1. maven { url 'https://jitpack.io' }
-2. implementation 'com.github.Rofik1075:CameraKit:3.0.0'
+2. implementation 'com.github.Rofik1075:ImagePicker:3.0.0'
 ```
 
 ## Cara Menggunakan
