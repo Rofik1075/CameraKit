@@ -4,9 +4,7 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -16,6 +14,7 @@ import java.io.IOException;
 import pub.devrel.easypermissions.EasyPermissions;
 
 import static android.app.Activity.RESULT_OK;
+import static java.util.Objects.requireNonNull;
 
 public class Camera {
     Context context;
@@ -30,7 +29,7 @@ public class Camera {
         this.activity = activity;
     }
 
-    public void requestCamera(){
+    public void requestCamera() {
         if (hasCameraPermission()) {
             Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             if (takePictureIntent.resolveActivity(activity.getPackageManager()) != null) {
@@ -41,17 +40,17 @@ public class Camera {
         }
     }
 
-    public void requestGalery(){
-        if (hasGaleryPermission()){
+    public void requestGalery() {
+        if (hasGaleryPermission()) {
             Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
             photoPickerIntent.setType("image/*");
             activity.startActivityForResult(photoPickerIntent, REQUEST_GALERY);
-        }else {
+        } else {
             EasyPermissions.requestPermissions(activity, "Izinkan Perizinan Storage", RC_GALERI_PERM, Manifest.permission.READ_EXTERNAL_STORAGE);
         }
     }
 
-    private boolean hasGaleryPermission(){
+    private boolean hasGaleryPermission() {
         return EasyPermissions.hasPermissions(context, Manifest.permission.READ_EXTERNAL_STORAGE);
     }
 
@@ -64,37 +63,30 @@ public class Camera {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             Bundle extras = data.getExtras();
             assert extras != null;
-            bitmap = decodeSampledBitmapFromResource(activity.getResources(),0, 100, 100);
-        }else if (requestCode == REQUEST_GALERY && resultCode == RESULT_OK){
+            bitmap = resizeBitmap((Bitmap) requireNonNull(extras.get("data")));
+        } else if (requestCode == REQUEST_GALERY && resultCode == RESULT_OK) {
             Uri selectedImage = data.getData();
-            bitmap = MediaStore.Images.Media.getBitmap(activity.getContentResolver(), selectedImage);
+            bitmap = resizeBitmap(MediaStore.Images.Media.getBitmap(activity.getContentResolver(), selectedImage));
         }
         return bitmap;
     }
 
-    public static int calculateInSampleSize(BitmapFactory.Options options, int reqWidth, int reqHeight) {
-        final int height = options.outHeight;
-        final int width = options.outWidth;
-        int inSampleSize = 1;
-
-        if (height > reqHeight || width > reqWidth) {
-            final int halfHeight = height / 2;
-            final int halfWidth = width / 2;
-            while ((halfHeight / inSampleSize) >= reqHeight && (halfWidth / inSampleSize) >= reqWidth) {
-                inSampleSize *= 2;
-            }
+    public static Bitmap resizeBitmap(Bitmap bitmap) {
+        int MAX_ALLOWED_RESOLUTION = 1024;
+        int outWidth;
+        int outHeight;
+        int inWidth = bitmap.getWidth();
+        int inHeight = bitmap.getHeight();
+        if(inWidth > inHeight){
+            outWidth = MAX_ALLOWED_RESOLUTION;
+            outHeight = (inHeight * MAX_ALLOWED_RESOLUTION) / inWidth;
+        } else {
+            outHeight = MAX_ALLOWED_RESOLUTION;
+            outWidth = (inWidth * MAX_ALLOWED_RESOLUTION) / inHeight;
         }
 
-        return inSampleSize;
-    }
+        Bitmap resizedBitmap = Bitmap.createScaledBitmap(bitmap, outWidth, outHeight, false);
 
-    public static Bitmap decodeSampledBitmapFromResource(Resources res, int resId, int reqWidth, int reqHeight) {
-        final BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inJustDecodeBounds = true;
-        BitmapFactory.decodeResource(res, resId, options);
-
-        options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);
-        options.inJustDecodeBounds = false;
-        return BitmapFactory.decodeResource(res, resId, options);
+        return resizedBitmap;
     }
 }
