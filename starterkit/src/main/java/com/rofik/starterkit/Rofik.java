@@ -12,6 +12,16 @@ import android.view.animation.LayoutAnimationController;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -25,6 +35,9 @@ public class Rofik extends AppCompatActivity {
     public SharedPreferences sp;
     public Editor ed;
     public ProgressDialog pd;
+    public FirebaseAuth fa;
+    public DatabaseReference dr;
+    public StorageReference sr;
 
     Activity activity;
     Context context;
@@ -35,9 +48,46 @@ public class Rofik extends AppCompatActivity {
         this.activity = activity;
         sp = activity.getSharedPreferences(getPackageName(), Context.MODE_PRIVATE);
         ed = sp.edit();
+
+        dr = FirebaseDatabase.getInstance().getReference();
+        sr = FirebaseStorage.getInstance().getReference();
+        fa = FirebaseAuth.getInstance();
+
         pd = new ProgressDialog(context);
         pd.setMessage("Memuat data...");
         pd.setCancelable(false);
+    }
+
+    public interface getDatasnapshot{
+        void onDatasnapshot(DataSnapshot datasnapshot);
+    }
+
+    public void getSingleDR(Query drx, getDatasnapshot ds){
+        drx.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                ds.onDatasnapshot(dataSnapshot);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    public void getValueDR(Query drx, getDatasnapshot ds){
+        drx.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                ds.onDatasnapshot(dataSnapshot);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
     public void animasiRV(final RecyclerView recyclerView) {
