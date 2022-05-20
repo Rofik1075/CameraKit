@@ -1,5 +1,6 @@
 package com.rofik.starterkit;
 import android.os.Bundle;
+import android.util.Log;
 
 import static android.Manifest.permission.ACCESS_COARSE_LOCATION;
 import static android.Manifest.permission.CAMERA;
@@ -20,5 +21,6 @@ public class MainActivity extends Rofik {
         };
 
         requestPermision("COba", 1, izin);
+
     }
 }
