@@ -1,6 +1,7 @@
 package com.rofik.starterkit;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -25,9 +26,14 @@ public class Rofik extends AppCompatActivity {
     public Editor ed;
     public ProgressDialog pd;
 
+    Activity activity;
+    Context context;
+
     @SuppressLint("CommitPrefEdits")
-    public Rofik() {
-        sp = getSharedPreferences("SharedPreferences.File", Context.MODE_PRIVATE);
+    public Rofik(Activity activity, Context context) {
+        this.context = context;
+        this.activity = activity;
+        sp = activity.getSharedPreferences(getPackageName(), Context.MODE_PRIVATE);
         ed = sp.edit();
         pd = new ProgressDialog(this);
         pd.setMessage("Memuat data...");
@@ -36,14 +42,11 @@ public class Rofik extends AppCompatActivity {
 
     public void animasiRV(final RecyclerView recyclerView) {
         Context context = recyclerView.getContext();
-        if (context != null){
-            LayoutAnimationController controller = AnimationUtils.loadLayoutAnimation(context, R.anim.lytanimrv);
+        LayoutAnimationController controller = AnimationUtils.loadLayoutAnimation(context, R.anim.lytanimrv);
 
-            recyclerView.setLayoutAnimation(controller);
-            requireNonNull(recyclerView.getAdapter()).notifyDataSetChanged();
-            recyclerView.scheduleLayoutAnimation();
-        }
-
+        recyclerView.setLayoutAnimation(controller);
+        requireNonNull(recyclerView.getAdapter()).notifyDataSetChanged();
+        recyclerView.scheduleLayoutAnimation();
     }
 
     public String getSp(String key){
@@ -51,11 +54,15 @@ public class Rofik extends AppCompatActivity {
     }
 
     public void requestPermision(String Pesan, int Kode, String... Permision){
-        EasyPermissions.requestPermissions(this, Pesan, Kode, Permision);
+        EasyPermissions.requestPermissions(activity, Pesan, Kode, Permision);
     }
 
     public boolean hasPermision(String... Permision){
-        return EasyPermissions.hasPermissions(this, Permision);
+        return EasyPermissions.hasPermissions(context, Permision);
+    }
+
+    public String getPackageName(){
+        return context.getApplicationContext().getPackageName();
     }
 
     @SuppressLint("SimpleDateFormat")
@@ -74,6 +81,6 @@ public class Rofik extends AppCompatActivity {
             tglformat = new SimpleDateFormat("yyyy-MM-dd");
         }
         Date date = new Date();
-        return tglformat.format(date);
+        return requireNonNull(tglformat).format(date);
     }
 }
