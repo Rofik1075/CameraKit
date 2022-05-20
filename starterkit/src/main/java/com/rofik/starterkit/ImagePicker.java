@@ -1,4 +1,4 @@
-package com.rofik.camerakit;
+package com.rofik.starterkit;
 
 import android.app.Activity;
 import android.content.Context;
