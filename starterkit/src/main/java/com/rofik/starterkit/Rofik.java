@@ -27,7 +27,7 @@ public class Rofik extends AppCompatActivity {
 
     @SuppressLint("CommitPrefEdits")
     public Rofik() {
-        sp = getSharedPreferences(getPackageName(), Context.MODE_PRIVATE);
+        sp = this.getSharedPreferences(getPackageName(), Context.MODE_PRIVATE);
         ed = sp.edit();
         pd = new ProgressDialog(this);
         pd.setMessage("Memuat data...");
@@ -35,12 +35,15 @@ public class Rofik extends AppCompatActivity {
     }
 
     public void animasiRV(final RecyclerView recyclerView) {
-        final Context context = recyclerView.getContext();
-        final LayoutAnimationController controller = AnimationUtils.loadLayoutAnimation(context, R.anim.lytanimrv);
+        Context context = recyclerView.getContext();
+        if (context != null){
+            LayoutAnimationController controller = AnimationUtils.loadLayoutAnimation(context, R.anim.lytanimrv);
 
-        recyclerView.setLayoutAnimation(controller);
-        requireNonNull(recyclerView.getAdapter()).notifyDataSetChanged();
-        recyclerView.scheduleLayoutAnimation();
+            recyclerView.setLayoutAnimation(controller);
+            requireNonNull(recyclerView.getAdapter()).notifyDataSetChanged();
+            recyclerView.scheduleLayoutAnimation();
+        }
+
     }
 
     public String getSp(String key){
@@ -56,7 +59,7 @@ public class Rofik extends AppCompatActivity {
     }
 
     public String getPackageName(){
-        return getApplicationContext().getPackageName();
+        return this.getApplicationContext().getPackageName();
     }
 
     @SuppressLint("SimpleDateFormat")
