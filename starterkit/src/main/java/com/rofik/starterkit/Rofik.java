@@ -27,7 +27,7 @@ public class Rofik extends AppCompatActivity {
 
     @SuppressLint("CommitPrefEdits")
     public Rofik() {
-        sp = this.getSharedPreferences(getPackageName(), Context.MODE_PRIVATE);
+        sp = getSharedPreferences("SharedPreferences.File", Context.MODE_PRIVATE);
         ed = sp.edit();
         pd = new ProgressDialog(this);
         pd.setMessage("Memuat data...");
@@ -56,10 +56,6 @@ public class Rofik extends AppCompatActivity {
 
     public boolean hasPermision(String... Permision){
         return EasyPermissions.hasPermissions(this, Permision);
-    }
-
-    public String getPackageName(){
-        return this.getApplicationContext().getPackageName();
     }
 
     @SuppressLint("SimpleDateFormat")
