@@ -35,7 +35,7 @@ public class Rofik extends AppCompatActivity {
         this.activity = activity;
         sp = activity.getSharedPreferences(getPackageName(), Context.MODE_PRIVATE);
         ed = sp.edit();
-        pd = new ProgressDialog(this);
+        pd = new ProgressDialog(context);
         pd.setMessage("Memuat data...");
         pd.setCancelable(false);
     }
