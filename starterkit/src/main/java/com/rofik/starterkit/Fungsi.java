@@ -54,9 +54,14 @@ public class Fungsi extends AppCompatActivity {
     public FirebaseAuth fa;
     public DatabaseReference dr;
     public StorageReference sr;
+    public static final FirebaseDatabase database = FirebaseDatabase.getInstance();
 
     Activity activity;
     Context context;
+
+    public Fungsi() {
+
+    }
 
     @SuppressLint("CommitPrefEdits")
     public Fungsi(Activity activity, Context context) {
