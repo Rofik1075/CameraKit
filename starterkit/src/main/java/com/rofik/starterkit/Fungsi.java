@@ -70,7 +70,7 @@ public class Fungsi extends AppCompatActivity {
         sp = activity.getSharedPreferences(getPackageName(), Context.MODE_PRIVATE);
         ed = sp.edit();
 
-        dr = FirebaseDatabase.getInstance().getReference();
+        dr = database.getReference();
         sr = FirebaseStorage.getInstance().getReference();
         fa = FirebaseAuth.getInstance();
 
