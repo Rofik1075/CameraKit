@@ -1,10 +1,9 @@
 package com.rofik.starterkit;
-import android.app.Activity;
-import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.helper.starterkit.R;
 
 import static android.Manifest.permission.ACCESS_COARSE_LOCATION;
 import static android.Manifest.permission.CAMERA;
@@ -17,7 +16,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Rofik rofik = new Rofik(this, this);
+        Helper helper = new Helper(this, this);
 
         String [] izin = {
                 READ_EXTERNAL_STORAGE,
@@ -25,6 +24,6 @@ public class MainActivity extends AppCompatActivity {
                 ACCESS_COARSE_LOCATION
         };
 
-        rofik.requestPermision("COba", 1, izin);
+        helper.requestPermision("COba", 1, izin);
     }
 }

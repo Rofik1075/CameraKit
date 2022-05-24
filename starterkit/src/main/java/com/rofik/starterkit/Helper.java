@@ -33,6 +33,7 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.helper.starterkit.R;
 
 import java.io.ByteArrayOutputStream;
 import java.text.DateFormat;
@@ -46,7 +47,7 @@ import pub.devrel.easypermissions.EasyPermissions;
 
 import static java.util.Objects.requireNonNull;
 
-public class Rofik extends AppCompatActivity {
+public class Helper extends AppCompatActivity {
     public SharedPreferences sp;
     public Editor ed;
     public ProgressDialog pd;
@@ -58,7 +59,7 @@ public class Rofik extends AppCompatActivity {
     Context context;
 
     @SuppressLint("CommitPrefEdits")
-    public Rofik(Activity activity, Context context) {
+    public Helper(Activity activity, Context context) {
         this.context = context;
         this.activity = activity;
         sp = activity.getSharedPreferences(getPackageName(), Context.MODE_PRIVATE);
