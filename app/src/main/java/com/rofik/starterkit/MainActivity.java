@@ -14,7 +14,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Fungsi helper = new Fungsi(this, this);
+        Fungsi fungsi = new Fungsi(this, this);
 
         String [] izin = {
                 READ_EXTERNAL_STORAGE,
@@ -22,6 +22,6 @@ public class MainActivity extends AppCompatActivity {
                 ACCESS_COARSE_LOCATION
         };
 
-        helper.requestPermision("COba", 1, izin);
+        fungsi.requestPermision("COba", 1, izin);
     }
 }
