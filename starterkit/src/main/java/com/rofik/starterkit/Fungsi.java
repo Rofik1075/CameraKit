@@ -47,7 +47,7 @@ import pub.devrel.easypermissions.EasyPermissions;
 
 import static java.util.Objects.requireNonNull;
 
-public class Helper extends AppCompatActivity {
+public class Fungsi extends AppCompatActivity {
     public SharedPreferences sp;
     public Editor ed;
     public ProgressDialog pd;
@@ -59,7 +59,7 @@ public class Helper extends AppCompatActivity {
     Context context;
 
     @SuppressLint("CommitPrefEdits")
-    public Helper(Activity activity, Context context) {
+    public Fungsi(Activity activity, Context context) {
         this.context = context;
         this.activity = activity;
         sp = activity.getSharedPreferences(getPackageName(), Context.MODE_PRIVATE);

@@ -3,8 +3,6 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.helper.starterkit.R;
-
 import static android.Manifest.permission.ACCESS_COARSE_LOCATION;
 import static android.Manifest.permission.CAMERA;
 import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
@@ -16,7 +14,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Helper helper = new Helper(this, this);
+        Fungsi helper = new Fungsi(this, this);
 
         String [] izin = {
                 READ_EXTERNAL_STORAGE,
