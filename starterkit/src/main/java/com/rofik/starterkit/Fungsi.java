@@ -22,6 +22,7 @@ import android.view.animation.LayoutAnimationController;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.fungsi.starterkit.R;
@@ -99,6 +100,20 @@ public class Fungsi extends AppCompatActivity {
         drx.keepSynced(false);
     }
 
+    public void getSingleDR(DatabaseReference drx, getDatasnapshot ds){
+        drx.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                ds.onDatasnapshot(dataSnapshot);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
     public void getValueDR(Query drx, getDatasnapshot ds){
         drx.keepSynced(true);
         drx.addValueEventListener(new ValueEventListener() {
@@ -113,6 +128,36 @@ public class Fungsi extends AppCompatActivity {
             }
         });
         drx.keepSynced(false);
+    }
+
+    public void getValueDR(DatabaseReference drx, getDatasnapshot ds){
+        drx.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                ds.onDatasnapshot(dataSnapshot);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    public void getDatePicker(FragmentManager manager, getString string) {
+        DatePickerFragment datePickerFragment = new DatePickerFragment();
+        datePickerFragment.show(manager, "data");
+        datePickerFragment.setOnDateClickListener((datePicker, i, i1, i2) -> {
+            String tahun = "" + datePicker.getYear();
+            String bulan = (datePicker.getMonth() + 1) < 10 ? "0" + (datePicker.getMonth() + 1) : "" + (datePicker.getMonth() + 1);
+            String hari = datePicker.getDayOfMonth() < 10 ? "0" + datePicker.getDayOfMonth() : "" + datePicker.getDayOfMonth();
+            String tglnya = tahun + "-" + bulan + "-" + hari;
+            string.onDateString(tglnya);
+        });
+    }
+
+    public interface getString{
+        void onDateString(String tgl);
     }
 
     public void animasiRV(final RecyclerView recyclerView) {
