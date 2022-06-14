@@ -76,7 +76,7 @@ public class Fungsi extends AppCompatActivity {
         fa = FirebaseAuth.getInstance();
 
         pd = new ProgressDialog(context);
-        pd.setMessage("Memuat data...");
+        pd.setMessage("Loading...");
         pd.setCancelable(false);
     }
 
@@ -84,7 +84,7 @@ public class Fungsi extends AppCompatActivity {
         void onDatasnapshot(DataSnapshot datasnapshot);
     }
 
-    public void getSingleDR(Query drx, getDatasnapshot ds){
+    public void getSingleDR(Query drx, getDatasnapshot ds){//Pakai Presisten
         drx.keepSynced(true);
         drx.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -114,7 +114,7 @@ public class Fungsi extends AppCompatActivity {
         });
     }
 
-    public void getValueDR(Query drx, getDatasnapshot ds){
+    public void getValueDR(Query drx, getDatasnapshot ds){//Pakai Presisten
         drx.keepSynced(true);
         drx.addValueEventListener(new ValueEventListener() {
             @Override
@@ -160,6 +160,7 @@ public class Fungsi extends AppCompatActivity {
         void onDateString(String tgl);
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     public void animasiRV(final RecyclerView recyclerView) {
         Context context = recyclerView.getContext();
         LayoutAnimationController controller = AnimationUtils.loadLayoutAnimation(context, R.anim.lytanimrv);
