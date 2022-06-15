@@ -27,6 +27,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.fungsi.starterkit.R;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -55,7 +56,9 @@ public class Fungsi extends AppCompatActivity {
     public FirebaseAuth fa;
     public DatabaseReference dr;
     public StorageReference sr;
+    public FirebaseUser fu;
     public static final FirebaseDatabase database = FirebaseDatabase.getInstance();
+    public static final FirebaseStorage storage = FirebaseStorage.getInstance();
 
     Activity activity;
     Context context;
@@ -71,9 +74,10 @@ public class Fungsi extends AppCompatActivity {
         sp = activity.getSharedPreferences(getPackageName(), Context.MODE_PRIVATE);
         ed = sp.edit();
 
-        dr = database.getReference();
-        sr = FirebaseStorage.getInstance().getReference();
+        dr = database.getReference("https://ternak-e558e-default-rtdb.firebaseio.com/");
+        sr = storage.getReference();
         fa = FirebaseAuth.getInstance();
+        fu = fa.getCurrentUser();
 
         pd = new ProgressDialog(context);
         pd.setMessage("Loading...");
@@ -253,6 +257,7 @@ public class Fungsi extends AppCompatActivity {
         return hasil;
     }
 
+    @SuppressLint("QueryPermissionsNeeded")
     public void panggilMap(String lat, String lon) {
         Uri gmmIntentUri = Uri.parse("google.navigation:q=" + lat + "," + lon);
         Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
@@ -266,6 +271,7 @@ public class Fungsi extends AppCompatActivity {
         }
     }
 
+    @SuppressLint("ObsoleteSdkInt")
     public void gantiStatusbar(int warna) {
         if (Build.VERSION.SDK_INT >= 21) {
             Window window = activity.getWindow();
